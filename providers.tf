@@ -4,6 +4,11 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "2.11.0"
     }
+
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "~> 1"
+    }
   }
 }
 
