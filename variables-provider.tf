@@ -1,7 +1,5 @@
-variable "kubernetes_version" {
-  description = "Kubernetes version"
-  type        = string
-  default     = "1.21.2-do.2"
+variable "do_token" {
+  description = "DigitalOcean API Token"
 }
 
 variable "region" {
@@ -11,6 +9,12 @@ variable "region" {
 variable "vpc_uuid" {
   description = "VPC UUID where to create cluster"
   type        = string
+}
+
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.21.2-do.2"
 }
 
 variable "auto_upgrade" {
