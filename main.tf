@@ -26,7 +26,7 @@ resource "digitalocean_kubernetes_cluster" "cluster" {
 }
 
 resource "digitalocean_kubernetes_node_pool" "node_pool" {
-  for_each = { for i, v in var.node_pools : "${v.name}-${i}" => v }
+  for_each = { for i, v in var.node_pools : v.name => v }
 
   cluster_id = digitalocean_kubernetes_cluster.cluster.id
   name       = try(each.value.name, "app-${each.key}")
