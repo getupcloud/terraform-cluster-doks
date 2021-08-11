@@ -1,7 +1,7 @@
 variable "kubernetes_version" {
   description = "Kubernetes version"
   type        = string
-  default     = "1.19.3-do.2"
+  default     = "1.21.2-do.2"
 }
 
 variable "region" {
