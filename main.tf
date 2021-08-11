@@ -39,9 +39,9 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
   tags       = distinct(concat(var.tags, try(each.value.tags, [])))
 
   taint {
-    key    = try(var.node_pool.taint.key, null)
-    value  = try(var.node_pool.taint.value, null)
-    effect = try(var.node_pool.taint.effect, null)
+    key    = try(each.taint.key, null)
+    value  = try(each.taint.value, null)
+    effect = try(each.taint.effect, null)
   }
 }
 
