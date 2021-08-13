@@ -36,15 +36,18 @@ variable "node_pool" {
     auto_scale = false
     min_nodes  = 2
     max_nodes  = 2
+    tags       = []
+
     labels = {
       role = "infra"
     }
-    taint = {
+
+    ## Format is list(taint): [{key:XXX, value: XXX, effect:XXX},...]
+    taints = [{
       key    = "dedicated"
       value  = "infra"
       effect = "NoSchedule"
-    }
-    tags = []
+    }]
   }
 }
 
@@ -58,11 +61,14 @@ variable "node_pools" {
       auto_scale = true
       min_nodes  = 2
       max_nodes  = 4
+      tags       = []
+
       labels = {
         role = "app"
       }
-      tags  = []
-      taint = {}
+
+      ## Format is list(taint): [{key:XXX, value: XXX, effect:XXX},...]
+      taints = []
     }
   ]
 }

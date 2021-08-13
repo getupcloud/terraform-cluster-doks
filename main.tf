@@ -17,10 +17,13 @@ resource "digitalocean_kubernetes_cluster" "cluster" {
     labels     = try(var.node_pool.labels, {})
     tags       = distinct(concat(var.tags, try(var.node_pool.tags, [])))
 
-    taint {
-      key    = try(var.node_pool.taint.key, null)
-      value  = try(var.node_pool.taint.value, null)
-      effect = try(var.node_pool.taint.effect, null)
+    dynamic "taint" {
+      for_each = try(var.node_pool.taints, [])
+      content {
+        key    = taint.value.key
+        value  = taint.value.value
+        effect = taint.value.effect
+      }
     }
   }
 }
@@ -39,7 +42,7 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
   tags       = distinct(concat(var.tags, try(each.value.tags, [])))
 
   dynamic "taint" {
-    for_each = try(each.value.taint, null)
+    for_each = try(each.value.taints, [])
     content {
       key    = taint.value.key
       value  = taint.value.value
