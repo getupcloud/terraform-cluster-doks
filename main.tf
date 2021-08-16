@@ -60,7 +60,7 @@ module "flux" {
 
 resource "digitalocean_spaces_bucket" "velero" {
   name          = "velero-${var.name}-${random_string.suffix.result}"
-  region        = var.region
+  region        = var.spaces_region
   acl           = "private"
   force_destroy = true
 }
