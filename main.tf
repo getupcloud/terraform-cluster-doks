@@ -57,3 +57,10 @@ module "flux" {
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/doks/manifests"
 }
+
+resource "digitalocean_spaces_bucket" "velero" {
+  name          = "velero-${var.name}-${random_string.suffix.result}"
+  region        = var.region
+  acl           = "private"
+  force_destroy = true
+}

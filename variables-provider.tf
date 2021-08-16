@@ -6,6 +6,18 @@ variable "region" {
   description = "Region where to create cluster"
 }
 
+variable "spaces_access_id" {
+  description = "Spaces Access Key ID for Backups"
+  type        = string
+  default     = null
+}
+
+variable "spaces_secret_key" {
+  description = "Spaces Access Key ID for Backups"
+  type        = string
+  default     = null
+}
+
 variable "vpc_uuid" {
   description = "VPC UUID where to create cluster"
   type        = string
