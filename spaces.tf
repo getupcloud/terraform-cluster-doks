@@ -3,6 +3,6 @@ resource "digitalocean_spaces_bucket" "buckets" {
   name          = each.key
   region        = each.value.region
   acl           = try(each.value.acl, "private")
-  force_destroy = try(each.value.force_detroy, false)
+  force_destroy = try(each.value.force_destroy, false)
 }
 
