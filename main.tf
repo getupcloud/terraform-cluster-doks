@@ -54,6 +54,21 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
 
-  git_repo       = var.flux_git_repo
-  manifests_path = "./clusters/${var.name}/doks/manifests"
+  git_repo                = var.flux_git_repo
+  manifests_path          = "./clusters/${var.name}/doks/manifests"
+  wait                    = var.flux_wait
+  manifests_template_vars = var.manifests_template_vars
+}
+
+module "cronitor" {
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
+
+  cluster_name  = var.name
+  customer_name = var.customer
+  cluster_sla   = var.sla
+  suffix        = "doks"
+  tags          = [var.region]
+  pagerduty_key = var.cronitor_pagerduty_key
+  api_key       = var.cronitor_api_key
+  api_endpoint  = digitalocean_kubernetes_cluster.cluster.endpoint
 }
