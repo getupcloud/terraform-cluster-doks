@@ -1,9 +1,9 @@
-variable "name" {
+variable "cluster_name" {
   description = "Cluster name"
   type        = string
 }
 
-variable "sla" {
+variable "cluster_sla" {
   description = "Cluster SLA"
   type        = string
   default     = "none"
@@ -42,7 +42,7 @@ variable "manifests_template_vars" {
   }
 }
 
-variable "customer" {
+variable "customer_name" {
   description = "Customer name"
   type        = string
 }

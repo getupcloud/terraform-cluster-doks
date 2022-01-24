@@ -1,5 +1,5 @@
 resource "digitalocean_kubernetes_cluster" "cluster" {
-  name          = var.name
+  name          = var.cluster_name
   region        = var.region
   version       = var.kubernetes_version
   vpc_uuid      = var.vpc_uuid
@@ -55,7 +55,7 @@ module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
 
   git_repo                = var.flux_git_repo
-  manifests_path          = "./clusters/${var.name}/doks/manifests"
+  manifests_path          = "./clusters/${var.cluster_name}/doks/manifests"
   wait                    = var.flux_wait
   manifests_template_vars = var.manifests_template_vars
 }
@@ -63,9 +63,9 @@ module "flux" {
 module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
 
-  cluster_name  = var.name
-  customer_name = var.customer
-  cluster_sla   = var.sla
+  cluster_name  = var.cluster_name
+  customer_name = var.customer_name
+  cluster_sla   = var.cluster_sla
   suffix        = "doks"
   tags          = [var.region]
   pagerduty_key = var.cronitor_pagerduty_key

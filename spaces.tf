@@ -1,5 +1,5 @@
 resource "digitalocean_spaces_bucket" "buckets" {
-  for_each      = { for b in var.spaces_buckets : try(b.name, "${b.name_prefix}-${var.name}-${random_string.suffix.result}") => b }
+  for_each      = { for b in var.spaces_buckets : try(b.cluster_name, "${b.name_prefix}-${var.cluster_name}-${random_string.suffix.result}") => b }
   name          = each.key
   region        = each.value.region
   acl           = try(each.value.acl, "private")
