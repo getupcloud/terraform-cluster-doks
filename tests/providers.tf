@@ -1,17 +1,3 @@
-terraform {
-  required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "~> 2.11.1"
-    }
-
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "~> 1"
-    }
-  }
-}
-
 provider "digitalocean" {
   token             = var.do_token
   spaces_access_id  = var.spaces_access_id
