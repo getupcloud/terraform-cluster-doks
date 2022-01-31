@@ -1,3 +1,5 @@
+VERSION:=1.0
+
 test: fmt init validate
 
 i init:
@@ -8,3 +10,8 @@ v validate:
 
 f fmt:
 	terraform fmt
+
+release:
+	git pull --tags
+	git tag v$(VERSION)
+	git push --tags
