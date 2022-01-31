@@ -52,7 +52,7 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=main"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v1.0"
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.cluster_name}/doks/manifests"
@@ -63,7 +63,7 @@ module "flux" {
 }
 
 module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.0"
 
   cluster_name  = var.cluster_name
   customer_name = var.customer_name
