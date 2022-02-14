@@ -52,7 +52,7 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v1.1"
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.cluster_name}/doks/manifests"
