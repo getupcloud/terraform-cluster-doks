@@ -59,10 +59,12 @@ module "flux" {
   wait           = var.flux_wait
   flux_version   = var.flux_version
 
-  manifests_template_vars = merge({
-    alertmanager_cronitor_id : module.cronitor.cronitor_id
+  manifests_template_vars = merge(
+    {
+      alertmanager_cronitor_id : module.cronitor.cronitor_id
+      teleport-agent : module.teleport-agent.teleport_agent_config
+      modules : {}
     },
-    module.teleport-agent.teleport_agent_config,
     var.manifests_template_vars
   )
 }
