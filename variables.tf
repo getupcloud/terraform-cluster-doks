@@ -100,3 +100,9 @@ variable "post_create" {
   type        = list(string)
   default     = []
 }
+
+variable "doks_modules" {
+  description = "Configure DOKS modules to install"
+  type        = any
+  default     = {}
+}
