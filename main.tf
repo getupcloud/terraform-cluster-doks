@@ -52,7 +52,7 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v1.10"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.5.1"
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.cluster_name}/doks/manifests"
@@ -83,23 +83,4 @@ module "cronitor" {
   tags              = [var.region]
   pagerduty_key     = var.cronitor_pagerduty_key
   notification_list = var.cronitor_notification_list
-}
-
-module "opsgenie" {
-  source = "github.com/getupcloud/terraform-module-opsgenie?ref=v1.2"
-
-  opsgenie_enabled = var.opsgenie_enabled
-  customer_name    = var.customer_name
-  owner_team_name  = var.opsgenie_team_name
-}
-
-module "teleport-agent" {
-  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.3"
-
-  auth_token       = var.teleport_auth_token
-  cluster_name     = var.cluster_name
-  customer_name    = var.customer_name
-  cluster_sla      = var.cluster_sla
-  cluster_provider = "doks"
-  cluster_region   = var.region
 }
