@@ -54,33 +54,22 @@ resource "digitalocean_kubernetes_node_pool" "node_pool" {
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=v2.5.1"
 
-  git_repo       = var.flux_git_repo
-  manifests_path = "./clusters/${var.cluster_name}/doks/manifests"
-  wait           = var.flux_wait
-  flux_version   = var.flux_version
-
-  manifests_template_vars = merge(
-    {
-      alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
-      alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
-      modules : var.doks_modules
-      modules_output : {}
-    },
-    module.teleport-agent.teleport_agent_config,
-    var.manifests_template_vars
-  )
+  git_repo                = var.flux_git_repo
+  manifests_path          = "./clusters/${var.cluster_name}/doks/manifests"
+  wait                    = var.flux_wait
+  flux_version            = var.flux_version
+  flux_install_file       = var.flux_install_file
+  manifests_template_vars = local.manifests_template_vars
+  debug                   = var.dump_debug
 }
 
-module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.4"
+module "teleport-agent" {
+  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.3"
 
-  api_endpoint      = digitalocean_kubernetes_cluster.cluster.endpoint
-  cronitor_enabled  = var.cronitor_enabled
-  cluster_name      = var.cluster_name
-  customer_name     = var.customer_name
-  cluster_sla       = var.cluster_sla
-  suffix            = "doks"
-  tags              = [var.region]
-  pagerduty_key     = var.cronitor_pagerduty_key
-  notification_list = var.cronitor_notification_list
+  auth_token       = var.teleport_auth_token
+  cluster_name     = var.cluster_name
+  customer_name    = var.customer_name
+  cluster_sla      = var.cluster_sla
+  cluster_provider = "doks"
+  cluster_region   = var.region
 }
