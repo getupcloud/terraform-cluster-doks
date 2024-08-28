@@ -11,7 +11,16 @@ import:
 	$(foreach i,$(filter https://% http://%, $(IMPORT_SOURCES)),curl -sLO $(i);)
 	$(foreach i,$(filter-out https://% http://%, $(IMPORT_SOURCES)),cp -f $(i) ./;)
 
-test: fmt lint init validate
+modules: variables-modules-merge.tf.json
+variables-modules-merge.tf.json: variables-modules.tf
+	./make-modules $< > $@
+
+test: modules fmt lint init validate
+	$(MAKE) -C test/
+
+clean:
+	rm -rf ./.terraform ./.terraform.lock.hcl
+	$(MAKE) -C test/ clean
 
 i init:
 	terraform init
@@ -29,7 +38,7 @@ v validate:
 f fmt:
 	terraform fmt
 
-release: update-version
+release: import modules fmt update-version
 	$(MAKE) build-release
 
 update-version:
